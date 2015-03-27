@@ -1,0 +1,21 @@
+{
+  "name": "bower",
+  "version": "0.0.0",
+  "authors": [
+    "v33ns"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+ 
+  },
+    "install": {
+    "path": "public/assets/javascript/libs/"
+  }
+}
