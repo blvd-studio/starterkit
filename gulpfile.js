@@ -1,11 +1,13 @@
 var gulp  		= require('gulp'),
-	gutil 		= require('gulp-util'),
+	gutil 		  = require('gulp-util'),
 	jshint     	= require('gulp-jshint'),
-	uglify		= require('gulp-uglify'),
+	uglify		  = require('gulp-uglify'),
 	sass       	= require('gulp-sass'),
 	concat     	= require('gulp-concat'),
 	minifyCSS 	= require('gulp-minify-css'),
+  plumber     = require('gulp-plumber'),
 	browserSync = require('browser-sync'),
+
 	reload      = browserSync.reload;	
 
     input  = {
@@ -21,9 +23,17 @@ var gulp  		= require('gulp'),
 
 gulp.task('default', ['watch']);
 
+var onError = function (error) {  
+  gutil.beep();
+  console.log(error.toString());
+  this.emit('end');
+};
 
 gulp.task('libs-plugins', function() {
 	return gulp.src(input.libs)
+  .pipe(plumber({
+      errorHandler: onError
+    }))
 	.pipe(uglify())
 	.pipe(concat('plugins.min.js'))
 	.pipe(gulp.dest(output.javascript));
@@ -31,9 +41,12 @@ gulp.task('libs-plugins', function() {
 
 gulp.task('build-js', function() {
 	return gulp.src(input.javascript)
+  .pipe(plumber({
+      errorHandler: onError
+    }))
 	.pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(uglify())
+  .pipe(jshint.reporter('jshint-stylish'))
+  .pipe(uglify())
 	.pipe(concat('scripts.min.js'))
 	.pipe(gulp.dest(output.javascript))
 });
@@ -42,6 +55,9 @@ gulp.task('build-js', function() {
 
 gulp.task('build-css', function() {
   	gulp.src(input.sass)
+      .pipe(plumber({
+      errorHandler: onError
+    }))
     .pipe(sass())
     .pipe(minifyCSS())
     .pipe(gulp.dest(output.stylesheets))

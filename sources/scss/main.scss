@@ -1,21 +1,9 @@
 @import "settings";
 
 body,html{
-
-	color: darken($color-default,20%);
-	background-color: #222;
+	background-color: #fff;
 }
-.test{
-
-	border: 1px solid $blue;
-}
-
 h1 {
-	color: #FF3300;
+	color: darken($color-default,20%);
 	font-size: 2em;
-}
-
-h2 {
-	color:#fff;
-	font-size: 10em;
 }
